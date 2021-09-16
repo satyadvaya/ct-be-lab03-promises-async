@@ -19,7 +19,7 @@ describe('SimpleDb', () => {
     });
   });
 
-  it('returns null for nonexistent id', () => {
+  it('should return null for nonexistent id', () => {
     const newSimpleDb = new SimpleDb(rootDir);
 
     return newSimpleDb.get(123).then((whatever) => {
