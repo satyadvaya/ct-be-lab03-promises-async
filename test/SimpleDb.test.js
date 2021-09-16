@@ -2,7 +2,7 @@ import { rm, mkdir } from 'fs/promises';
 import { SimpleDb } from '../SimpleDb.js';
 
 describe('SimpleDb', () => {
-  const rootDir = '../store';
+  const rootDir = './store';
 
   beforeEach(() => {
     return rm(rootDir, { recursive: true, force: true }).then(() => {
@@ -16,6 +16,14 @@ describe('SimpleDb', () => {
 
     return newSimpleDb.save(objectContent).then(() => {
       expect(objectContent.id).toEqual(expect.any(String));
+    });
+  });
+
+  it('returns null for nonexistent id', () => {
+    const newSimpleDb = new SimpleDb(rootDir);
+
+    return newSimpleDb.get(123).then((whatever) => {
+      expect(whatever).toBe(null);
     });
   });
 });
