@@ -50,4 +50,15 @@ describe('SimpleDb', () => {
 
         expect(objectId).toEqual(expect.arrayContaining(fruits));
     });
+
+    it('should delete an object', async () => {
+        const newSimpleDb = new SimpleDb(rootDir);
+        const objectContent = { word: 'banana' };
+
+        await newSimpleDb.save(objectContent);
+        await newSimpleDb.delete(objectContent.id);
+        const objectId = await newSimpleDb.get(objectContent.id);
+
+        expect(objectId).toBe(null);
+    });
 });
