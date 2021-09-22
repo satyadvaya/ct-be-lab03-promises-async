@@ -67,7 +67,7 @@ describe('SimpleDb', () => {
         const objectContent = { word: 'banana' };
 
         await newSimpleDb.save(objectContent);
-        objectContent.word = 'identifier';
+        objectContent.word = 'apple';
         await newSimpleDb.update(objectContent);
         const objectId = await newSimpleDb.get(objectContent.id);
 
