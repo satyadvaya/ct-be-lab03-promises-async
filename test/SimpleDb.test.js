@@ -10,20 +10,30 @@ describe('SimpleDb', () => {
     });
   });
 
-  it('should create a file within RootDir', () => {
+  it('should create a file within RootDir', async () => {
     const newSimpleDb = new SimpleDb(rootDir);
     const objectContent = { word: 'banana' };
 
-    return newSimpleDb.save(objectContent).then(() => {
-      expect(objectContent.id).toEqual(expect.any(String));
-    });
+    await newSimpleDb.save(objectContent);
+
+    expect(objectContent.id).toEqual(expect.any(String));
   });
 
-  it('should return null for nonexistent id', () => {
+  it('should save and get an object', async () => {
+    const newSimpleDb = new SimpleDb(rootDir);
+    const objectContent = { word: 'banana' };
+
+    await newSimpleDb.save(objectContent);
+    const objectId = await newSimpleDb.get(objectContent.id);
+
+    expect(objectId).toEqual(objectContent);
+  });
+
+  it('should return null for nonexistent id', async () => {
     const newSimpleDb = new SimpleDb(rootDir);
 
-    return newSimpleDb.get(123).then((whatever) => {
-      expect(whatever).toBe(null);
-    });
+    const objectId = await newSimpleDb.get('nonexistent-id');
+
+    expect(objectId).toBe(null);
   });
 });
