@@ -61,4 +61,16 @@ describe('SimpleDb', () => {
 
         expect(objectId).toBe(null);
     });
+
+    it('should update an object', async () => {
+        const newSimpleDb = new SimpleDb(rootDir);
+        const objectContent = { word: 'banana' };
+
+        await newSimpleDb.save(objectContent);
+        objectContent.word = 'identifier';
+        await newSimpleDb.update(objectContent);
+        const objectId = await newSimpleDb.get(objectContent.id);
+
+        expect(objectId).toEqual(objectContent);
+    });
 });
