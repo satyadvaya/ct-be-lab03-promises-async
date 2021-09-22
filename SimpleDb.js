@@ -1,4 +1,4 @@
-import { readFile, writeFile, readdir } from 'fs/promises';
+import { readFile, writeFile, readdir, rm } from 'fs/promises';
 import path from 'path';
 import shortid from 'shortid';
 
@@ -33,5 +33,11 @@ export class SimpleDb {
         const directoryFiles = await readdir(this.rootDir);
         const ids = directoryFiles.map((file) => path.basename(file, '.json'));
         return Promise.all(ids.map((id) => this.get(id)));
+    }
+
+    async delete(id) {
+        const fileName = `${id}.json`;
+        this.newFile = path.join(this.rootDir, fileName);
+        return rm(this.newFile);
     }
 }
