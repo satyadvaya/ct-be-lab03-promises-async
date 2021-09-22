@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { readFile, writeFile, readdir } from 'fs/promises';
 import path from 'path';
 import shortid from 'shortid';
 
@@ -27,5 +27,11 @@ export class SimpleDb {
                 }
                 throw error;
             });
+    }
+
+    async getAll() {
+        const directoryFiles = await readdir(this.rootDir);
+        const ids = directoryFiles.map((file) => path.basename(file, '.json'));
+        return Promise.all(ids.map((id) => this.get(id)));
     }
 }
