@@ -40,4 +40,10 @@ export class SimpleDb {
         this.newFile = path.join(this.rootDir, fileName);
         return rm(this.newFile);
     }
+
+    async update(objectFile) {
+        const fileName = `${objectFile.id}.json`;
+        this.newFile = path.join(this.rootDir, fileName);
+        return await writeFile(this.newFile, JSON.stringify(objectFile));
+    }
 }
